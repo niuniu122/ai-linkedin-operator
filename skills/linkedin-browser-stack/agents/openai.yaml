@@ -1,0 +1,4 @@
+interface:
+  display_name: "LinkedIn Browser Stack"
+  short_description: "Use OpenCLI and Browser Harness for LinkedIn."
+  default_prompt: "Use $linkedin-browser-stack to check browser readiness and operate LinkedIn with OpenCLI first, then Browser Harness only when needed."

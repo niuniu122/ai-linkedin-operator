@@ -1,18 +1,20 @@
 ---
 name: linkedin-post-text
-description: Publish or prepare a LinkedIn text-only post through the user's OpenCLI/browser-harness workflow. Use when the user asks Codex to write, polish, schedule manually, publish, verify, or log a LinkedIn text post for niche manufacturing, product, sourcing, OEM/ODM, B2B, or buyer education content.
+description: Publish or prepare a LinkedIn text-only post through the user's OpenCLI and Browser Harness workflow. Use when Codex needs to write, polish, prepare, publish, verify, or log a LinkedIn text post for niche manufacturing, product, sourcing, OEM/ODM, B2B, or buyer education content.
 ---
 
 # LinkedIn Text Post
 
 ## Workflow
 
-Use only the user's configured browser tools for browser actions:
+Use only the packaged local browser stack for browser actions:
 
-- OpenCLI: `E:\machine text\tool\opencli.ps1`
-- Browser harness wrapper: `E:\machine text\tool\browser-stack.ps1`
+- OpenCLI: `.\tool\opencli.ps1`
+- Browser stack wrapper: `.\tool\browser-stack.ps1`
 
-Do not use the Browser plugin, native browser shortcuts, or unrelated browser automation when the user requires the `tool` directory workflow.
+Prefer the `linkedin-browser-stack` skill for browser readiness, login-state checks, OpenCLI-to-Harness handoff, and troubleshooting.
+
+Do not use a generic browser plugin, native browser shortcuts, or unrelated browser automation when the local stack is available.
 
 ## Draft
 
@@ -32,14 +34,14 @@ Good topic patterns:
 - packaging fit before bulk production
 - sample-to-bulk consistency
 
-Save the final text to `E:\machine text\linkedin_ops\YYYY-MM-DD_text_post.txt` or a more specific filename.
+Save the final text to `.\linkedin_ops\YYYY-MM-DD_text_post.txt` or the user's preferred local operations folder.
 
 ## Publish
 
 1. Open the feed:
    `.\tool\opencli.ps1 browser li open https://www.linkedin.com/feed/`
-2. Open the share box (`发动态` / start a post).
-3. Fill the composer with the final text using OpenCLI `fill` or browser-harness keyboard/JS helpers.
+2. Open the share box.
+3. Fill the composer with the final text using OpenCLI `fill` or Browser Harness keyboard/JS helpers.
 4. Publish only if the user has approved publishing in this run or has an active standing instruction that publishing does not require confirmation.
 
 If there is no active permission, leave the post prepared and show the exact text before publishing.
@@ -57,7 +59,7 @@ Confirm the new text appears as the latest activity. Check for accidental duplic
 
 ## Log
 
-Write logs in Chinese under `E:\machine text\linkedin_ops\YYYY-MM-DD_运营记录.md`; keep LinkedIn-facing text in English.
+Write logs under `.\linkedin_ops\YYYY-MM-DD_operations_log.md` or the user's preferred local operations folder; keep LinkedIn-facing text in English.
 
 Record:
 

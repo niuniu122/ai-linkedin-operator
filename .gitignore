@@ -14,8 +14,8 @@ coverage/
 cookies/
 profiles/
 browser-harness-profile/
+browser-stack-state.json
 linkedin_ops/
 memory/
 *.secret*
 *.token*
-

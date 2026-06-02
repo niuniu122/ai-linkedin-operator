@@ -5,6 +5,7 @@ $Required = @(
   'skills\linkedin-post-video\SKILL.md',
   'skills\linkedin-post-text\SKILL.md',
   'skills\linkedin-comment\SKILL.md',
+  'skills\linkedin-browser-stack\SKILL.md',
   'tools\wrappers\opencli.ps1',
   'tools\wrappers\browser-stack.ps1',
   'tools\wrappers\browser-harness.ps1',

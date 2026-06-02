@@ -11,9 +11,9 @@ $BrowserHarnessDir = Join-Path $ToolDir 'browser-harness'
 
 New-Item -ItemType Directory -Force -Path $ToolDir, $CodexSkillsPath | Out-Null
 
-Copy-Item -Recurse -Force -LiteralPath (Join-Path $InstallRoot 'skills\linkedin-post-video') -Destination $CodexSkillsPath
-Copy-Item -Recurse -Force -LiteralPath (Join-Path $InstallRoot 'skills\linkedin-post-text') -Destination $CodexSkillsPath
-Copy-Item -Recurse -Force -LiteralPath (Join-Path $InstallRoot 'skills\linkedin-comment') -Destination $CodexSkillsPath
+Get-ChildItem -LiteralPath (Join-Path $InstallRoot 'skills') -Directory | ForEach-Object {
+  Copy-Item -Recurse -Force -LiteralPath $_.FullName -Destination $CodexSkillsPath
+}
 
 if (-not (Test-Path -LiteralPath $OpenCliDir)) {
   git clone https://github.com/jackwener/OpenCLI.git $OpenCliDir
@@ -42,7 +42,7 @@ if (Get-Command pipx -ErrorAction SilentlyContinue) {
   python -m pip install -e $BrowserHarnessDir
 }
 
-Write-Output 'Installed LinkedIn operator skills and local tool workflow.'
+Write-Output 'Installed LinkedIn operator skills and local browser workflow.'
 Write-Output "Tools: $ToolDir"
 Write-Output "Skills: $CodexSkillsPath"
 Write-Output 'Next: run .\tool\browser-stack.ps1 doctor'
