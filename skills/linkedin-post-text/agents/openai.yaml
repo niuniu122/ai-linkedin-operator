@@ -1,0 +1,4 @@
+interface:
+  display_name: "LinkedIn Text Post"
+  short_description: "Publish LinkedIn text posts."
+  default_prompt: "Publish this text post to LinkedIn and verify it appears on the profile."

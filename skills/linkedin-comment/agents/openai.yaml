@@ -1,0 +1,4 @@
+interface:
+  display_name: "LinkedIn Comment"
+  short_description: "Leave targeted LinkedIn comments."
+  default_prompt: "Find a relevant LinkedIn post, write a natural targeted comment, publish it, and log the result."

@@ -1,0 +1,48 @@
+{
+  "site": "linkedin",
+  "name": "post-video",
+  "description": "Create a LinkedIn feed post with one native video using the logged-in browser session",
+  "access": "write",
+  "domain": "www.linkedin.com",
+  "strategy": "ui",
+  "browser": true,
+  "args": [
+    {
+      "name": "file",
+      "type": "str",
+      "required": true,
+      "help": "Local video file path"
+    },
+    {
+      "name": "text",
+      "type": "str",
+      "required": false,
+      "help": "Post text"
+    },
+    {
+      "name": "text-file",
+      "type": "str",
+      "required": false,
+      "help": "Read post text from a UTF-8 file"
+    },
+    {
+      "name": "execute",
+      "type": "bool",
+      "default": false,
+      "required": false,
+      "help": "Actually click Publish. Default leaves the prepared post open."
+    }
+  ],
+  "columns": [
+    "status",
+    "video_file",
+    "text_chars",
+    "upload_via",
+    "published"
+  ],
+  "type": "js",
+  "modulePath": "linkedin/post-video.js",
+  "sourceFile": "linkedin/post-video.js",
+  "navigateBefore": true
+}
+

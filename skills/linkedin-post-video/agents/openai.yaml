@@ -1,0 +1,4 @@
+interface:
+  display_name: "LinkedIn Video Post"
+  short_description: "Publish LinkedIn video posts."
+  default_prompt: "Publish this video to LinkedIn with a suitable caption and verify the post."
