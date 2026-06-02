@@ -1,14 +1,72 @@
 # AI LinkedIn Operator
 
-This repository packages a practical LinkedIn operating workflow for AI agents:
+![AI LinkedIn Operator browser stack](assets/linkedin-operator-browser-stack.png)
 
-- publish native LinkedIn video posts
-- publish LinkedIn text posts
-- leave targeted LinkedIn comments
-- use OpenCLI and Browser Harness against the user's logged-in browser
-- keep OpenCLI and Browser Harness aligned on the same browser profile and tab
+AI LinkedIn Operator packages a local, compliance-conscious browser operating stack for agents that need to help with LinkedIn publishing and relationship-building workflows.
 
-It is built around Codex skills and local browser tools. It does not store LinkedIn passwords, cookies, browser profiles, private messages, private logs, or account memory.
+It is built around Codex skills, OpenCLI, Browser Harness, and the user's own logged-in browser session. The repository does not contain LinkedIn credentials, cookies, browser profiles, private messages, private logs, or account memory.
+
+## What This Repository Enables
+
+After installation in a local agent environment, an agent can follow specialized skills for:
+
+- publishing native LinkedIn video posts
+- publishing LinkedIn text posts
+- leaving targeted LinkedIn comments
+- checking whether OpenCLI and Browser Harness share the same logged-in browser state
+- keeping OpenCLI and Browser Harness aligned on the same browser profile and active tab
+- verifying readiness before any browser write action
+
+This is not a cloud SaaS, not a LinkedIn API client, and not a permission grant to automate a third-party platform. It is a local operating bundle that gives an agent repeatable instructions, wrappers, and checks for working through the user's browser when the user has authorization to do so.
+
+## Can An Agent Operate LinkedIn After Installing This?
+
+Yes, with important conditions.
+
+Installing this repository gives a local Codex-style agent the skills and wrappers needed to operate a browser through OpenCLI and Browser Harness. The user still needs to:
+
+- run the installer on a local Windows/PowerShell environment
+- keep their own browser logged in
+- complete any browser permission or remote-debugging prompts
+- verify the stack with `browser-stack.ps1 doctor` and `browser-stack.ps1 verify-login`
+- give explicit approval or standing instructions before write actions
+- comply with LinkedIn policies, applicable law, and the user's organization rules
+
+In practice, the repository turns browser automation from an ad-hoc session into a repeatable skill stack. It does not remove the need for human accountability, policy review, or target verification.
+
+## Architecture
+
+```mermaid
+flowchart LR
+  User["User approval and logged-in browser"] --> Agent["Local AI agent"]
+  Agent --> Skills["Codex skills"]
+  Skills --> OpenCLI["OpenCLI primary layer"]
+  OpenCLI --> Bridge["Browser Bridge / adapters"]
+  Bridge --> Browser["Logged-in browser profile"]
+  Skills --> Harness["Browser Harness fallback layer"]
+  Harness --> Browser
+  Browser --> LinkedIn["LinkedIn UI"]
+  Skills --> Logs["Local runtime state and logs"]
+```
+
+The stack follows one rule: use the most deterministic tool first, then fall back only when needed.
+
+OpenCLI is the primary browser automation layer. This package uses it for adapter-backed commands, Browser Bridge actions, page inspection, and deterministic DOM-driven work.
+
+Browser Harness is the fallback and verification layer. This package uses it for screenshots, raw CDP access, file-input edges, visual interaction, coordinate-level recovery, and cases where OpenCLI cannot complete the action cleanly.
+
+The wrappers include OpenCLI-to-Harness tab sync. When OpenCLI opens a URL, the target is recorded in `tool/browser-stack-state.json`; Browser Harness switches to that tab before running piped scripts. The state file is local runtime data and is ignored by git.
+
+## OpenCLI And Browser Harness
+
+This repository depends on two upstream open-source projects:
+
+- OpenCLI: https://github.com/jackwener/OpenCLI
+- Browser Harness: https://github.com/browser-use/browser-harness
+
+OpenCLI and Browser Harness are general browser automation projects. They are not LinkedIn products and they do not grant permission to automate LinkedIn or any other website. This repository treats them as local tools that must be used within the limits of platform rules, user authorization, upstream licenses, and applicable law.
+
+The upstream source trees are not vendored here. `scripts/install.ps1` clones them locally into `tool/`, which is ignored by git. This keeps the repository small and avoids redistributing upstream code or generated build artifacts.
 
 ## What Is Included
 
@@ -27,18 +85,10 @@ scripts/
   install.ps1             Install skills and local tool dependencies
   patch-opencli-manifest.mjs
   verify.ps1              Basic local package verification
+
+assets/
+  linkedin-operator-browser-stack.png
 ```
-
-## Design
-
-The workflow assumes an AI agent controls a real browser through local tools:
-
-- OpenCLI: https://github.com/jackwener/OpenCLI
-- Browser Harness: https://github.com/browser-use/browser-harness
-
-The account operator stays logged in through their own browser session. OpenCLI is used first for deterministic adapters and Browser Bridge actions. Browser Harness is used only as the fallback for screenshots, raw CDP, hidden file inputs, visual interaction, and other UI edges.
-
-The wrappers include OpenCLI-to-Harness tab sync: when OpenCLI opens a URL, the target is recorded in `tool/browser-stack-state.json`; Browser Harness switches to that tab before running piped scripts. The state file is local runtime data and is ignored by git.
 
 ## Install On Windows
 
@@ -89,7 +139,7 @@ Use linkedin-post-video. Upload this MP4 to LinkedIn with a vertical buyer-educa
 Publish a LinkedIn text post:
 
 ```text
-Use linkedin-post-text. Publish a buyer-education post about sample approval and log the result.
+Use linkedin-post-text. Publish a buyer-education post and log the result.
 ```
 
 Comment on target posts:
@@ -104,8 +154,30 @@ Use linkedin-comment. Find relevant target-industry posts and leave three natura
 - Prefer OpenCLI adapters and Browser Bridge before Browser Harness.
 - Do not upload cookies, profile folders, messages, private logs, memory files, or runtime state.
 - Confirm exact targets before write actions such as publish, send, connect, comment, delete, or invite.
-- For comments, identify a concrete resonance point first, then add a grounded production or sourcing viewpoint.
+- Fail closed when the target, account state, or page state is uncertain.
+- For comments, identify a concrete resonance point first, then add a grounded production, sourcing, or operator viewpoint.
 - For niche industry content, keep posts narrow and useful to the target buyer. Use no more than two relevant hashtags.
+
+## Compliance And Safety
+
+Review the relevant platform rules before using any automation. For LinkedIn, start with:
+
+- LinkedIn User Agreement: https://www.linkedin.com/legal/user-agreement
+- LinkedIn Professional Community Policies: https://www.linkedin.com/legal/professional-community-policies
+- LinkedIn Prohibited Software and Extensions: https://www.linkedin.com/help/linkedin/answer/a1341387
+
+This repository is designed to support compliant, human-supervised workflows. It should not be used for:
+
+- bypassing authentication, security controls, rate limits, or anti-abuse systems
+- collecting, exporting, or selling personal data
+- scraping private or restricted content
+- storing credentials, cookies, browser profiles, or session tokens
+- sending bulk unsolicited messages, connection requests, comments, or invitations
+- impersonation, fake identities, deceptive engagement, or spam
+- operating on accounts, pages, or data the user is not authorized to access
+- hiding automation from a user, employer, platform, or compliance reviewer who needs to know
+
+Use the stack for owned-account operations, human-reviewed publishing, limited targeted engagement, local verification, and internal agent assistance where the user has authorization. If a platform, employer, customer, or local law does not permit a workflow, do not run it through this package.
 
 ## Included OpenCLI Override
 
@@ -116,3 +188,25 @@ tools/opencli-overrides/clis/linkedin/post-video.js
 ```
 
 The adapter is applied by `scripts/install.ps1`. It is kept separate from the upstream OpenCLI repository so this package stays small and avoids committing `node_modules` or build artifacts.
+
+## Privacy Model
+
+The public repository contains instructions, wrappers, and small source files only. Runtime data stays local and is ignored by git:
+
+- `tool/`
+- `cookies/`
+- `profiles/`
+- `browser-harness-profile/`
+- `browser-stack-state.json`
+- `linkedin_ops/`
+- `memory/`
+- `.env` and token-like files
+
+Before publishing changes, run:
+
+```powershell
+.\scripts\verify.ps1
+git status --short
+```
+
+Do not commit screenshots, videos, logs, browser state, or customer/account-specific operating memory unless you intentionally prepared them for public release.
