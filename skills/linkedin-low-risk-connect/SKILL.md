@@ -37,6 +37,25 @@ Never commit prospect spreadsheets, target lists, private notes, browser state, 
 
 Do not bulk add. Process exactly one candidate at a time.
 
+Target confidence does not make the action low risk. Before judging any candidate, judge whether the account is ready to send another connection request.
+
+Use this decision order:
+
+```text
+account stability -> recent invite history -> relationship warmth -> target confidence -> invite necessity
+```
+
+Skip all connection requests for the session when any condition is true:
+
+- recent `AUTH_REQUIRED`, public-login fallback, checkpoint, CAPTCHA, or identity-verification signal
+- recent outbound invite burst or unknown pending-invitation state
+- low remaining personalized invitation allowance
+- the workflow starts from a cold lead list and needs multiple people searches
+- the target has no warm interaction and no exact profile URL
+- the account has just posted, commented, messaged, searched, or connected multiple times in the same operating window
+
+When the account-readiness gate fails, prepare a shortlist, comment plan, or human-review note instead of sending invites.
+
 Send a connection request only when all conditions are true:
 
 - The LinkedIn profile is tied to the candidate name from the input.
@@ -72,6 +91,8 @@ For each candidate:
 3. Compare the profile against the due-diligence notes.
 4. Record the evidence used for the match.
 5. Decide `send`, `skip`, or `needs human review`.
+
+Avoid a direct spreadsheet-to-search-to-connect flow in one session. If the input only contains search clues, create a reviewed shortlist first and connect later only when the account state is clean and the exact profile URL is known.
 
 Use OpenCLI adapters and Browser Bridge first. Use Browser Harness only when the page is already open and a visual fallback is necessary.
 
@@ -123,8 +144,10 @@ Write local logs in the user's preferred language. Keep LinkedIn-facing notes in
 
 For each candidate, record:
 
+- account-readiness decision
 - input source and candidate name
 - profile URL or search evidence
+- warm signal or lack of warm signal
 - match evidence
 - decision: sent, skipped, failed, or needs human review
 - exact invite note when sent
