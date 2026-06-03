@@ -14,6 +14,7 @@ $Required = @(
   'tools\wrappers\start-browser-harness-chrome.ps1',
   'tools\opencli-overrides\clis\linkedin\post-video.js',
   'tools\opencli-overrides\manifest\linkedin-post-video.json',
+  'docs\linkedin-connection-risk-review.md',
   'scripts\patch-opencli-manifest.mjs',
   'scripts\install.ps1'
 )
