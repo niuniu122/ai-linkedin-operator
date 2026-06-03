@@ -6,6 +6,14 @@ AI LinkedIn Operator packages a local, compliance-conscious browser operating st
 
 It is built around Codex skills, OpenCLI, Browser Harness, and the user's own logged-in browser session. The repository does not contain LinkedIn credentials, cookies, browser profiles, private messages, private logs, or account memory.
 
+## Risk-Control First
+
+Connection requests are treated as the highest-risk write action in this package.
+
+Target relevance is not enough. Before sending an invite, an agent must judge account stability, recent invite history, relationship warmth, and whether the workflow looks like lead-list automation.
+
+Read the sanitized postmortem: [LinkedIn Connection Request Risk Review](docs/linkedin-connection-risk-review.md).
+
 ## What This Repository Enables
 
 After installation in a local agent environment, an agent can follow specialized skills for:
@@ -90,6 +98,9 @@ scripts/
 
 assets/
   linkedin-operator-browser-stack.png
+
+docs/
+  linkedin-connection-risk-review.md
 ```
 
 ## Install On Windows
@@ -164,6 +175,7 @@ Use linkedin-low-risk-connect. Review this vetted prospect list, verify each Lin
 - Confirm exact targets before write actions such as publish, send, connect, comment, delete, or invite.
 - Fail closed when the target, account state, or page state is uncertain.
 - Process connection requests one person at a time; do not run bulk invites.
+- For connection requests, judge account readiness before target fit. A matched target is not enough to send.
 - For comments, identify a concrete resonance point first, then add a grounded production, sourcing, or operator viewpoint.
 - For niche industry content, keep posts narrow and useful to the target buyer. Use no more than two relevant hashtags.
 
