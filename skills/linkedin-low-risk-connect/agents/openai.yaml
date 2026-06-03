@@ -1,0 +1,4 @@
+interface:
+  display_name: "LinkedIn Low-Risk Connect"
+  short_description: "Verify prospects and send targeted LinkedIn invites."
+  default_prompt: "Review this vetted prospect list, verify each LinkedIn profile, send only low-risk personalized connection requests, and log the results."

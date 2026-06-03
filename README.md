@@ -13,6 +13,7 @@ After installation in a local agent environment, an agent can follow specialized
 - publishing native LinkedIn video posts
 - publishing LinkedIn text posts
 - leaving targeted LinkedIn comments
+- sending low-risk, individually verified LinkedIn connection requests from vetted prospect lists
 - checking whether OpenCLI and Browser Harness share the same logged-in browser state
 - keeping OpenCLI and Browser Harness aligned on the same browser profile and active tab
 - verifying readiness before any browser write action
@@ -76,6 +77,7 @@ skills/
   linkedin-post-video/    Native LinkedIn video post workflow
   linkedin-post-text/     LinkedIn text post workflow
   linkedin-comment/       Targeted comment workflow
+  linkedin-low-risk-connect/ Prospect verification and connection request workflow
 
 tools/
   wrappers/               PowerShell wrappers for OpenCLI and Browser Harness
@@ -148,6 +150,12 @@ Comment on target posts:
 Use linkedin-comment. Find relevant target-industry posts and leave three natural comments.
 ```
 
+Send low-risk connection requests:
+
+```text
+Use linkedin-low-risk-connect. Review this vetted prospect list, verify each LinkedIn profile, send only low-risk personalized connection requests, and log skipped targets.
+```
+
 ## Operating Rules
 
 - Use the local OpenCLI/Browser Harness workflow for browser actions.
@@ -155,6 +163,7 @@ Use linkedin-comment. Find relevant target-industry posts and leave three natura
 - Do not upload cookies, profile folders, messages, private logs, memory files, or runtime state.
 - Confirm exact targets before write actions such as publish, send, connect, comment, delete, or invite.
 - Fail closed when the target, account state, or page state is uncertain.
+- Process connection requests one person at a time; do not run bulk invites.
 - For comments, identify a concrete resonance point first, then add a grounded production, sourcing, or operator viewpoint.
 - For niche industry content, keep posts narrow and useful to the target buyer. Use no more than two relevant hashtags.
 
